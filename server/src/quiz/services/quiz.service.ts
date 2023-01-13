@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateQuizDto } from './dtos/createQuiz.dto';
-import { Quiz } from './entities/quiz.entity';
-import { QuizRepository } from './repositories/quiz.repository';
+import { CreateQuizDto } from '../dtos/createQuiz.dto';
+import { Quiz } from '../entities/quiz.entity';
+import { QuizRepository } from '../repositories/quiz.repository';
 
 @Injectable()
 export class QuizService {
@@ -15,6 +15,13 @@ export class QuizService {
 
     getAllQuiz() {
         return [1, 2, 3, 4]
+    }
+
+    async getQuizById(id: number): Promise<Quiz> {
+        return await this.quizRepository.findOne({
+            where: { id },
+            relations: ['questions'],
+        });
     }
 
     async createNewQuiz(quiz: CreateQuizDto) {
