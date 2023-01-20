@@ -28,4 +28,6 @@ export class Quiz extends BaseEntity {
     @OneToMany(() => Question, (question) => question.quiz)
     questions: Question[]
 
+
+
 }   

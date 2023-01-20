@@ -9,6 +9,13 @@ import { Repository } from 'typeorm';
 export class QuestionService {
     constructor(@InjectRepository(Question) private questionRepository: Repository<Question>) { }
 
+    async findQuestionById(id: number) {
+        return await this.questionRepository.findOne({
+            where: { id },
+            relations: ['quiz', 'options']
+        })
+    }
+
     async createNewQuestion(question: CreateQuestionDto, quiz: Quiz): Promise<Question> {
 
         const newQuestion = await this.questionRepository.save({
