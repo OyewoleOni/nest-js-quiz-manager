@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateQuestionDto } from '../dtos/create-question.dto';
 import { Question } from '../entities/question.entity';
 
@@ -11,7 +11,15 @@ export class QuestionController {
 
     constructor(private questionService: QuestionService, private quizService: QuizService) { }
 
+    @Get()
+    async getAllQuestions(): Promise<number[]> {
+        return [1, 2]
+    }
 
+    @Get("/:id")
+    async getQuestionById(@Param('id', ParseIntPipe) id: number) {
+        return await this.questionService.findQuestionById(id);
+    }
 
     @Post()
     @UsePipes(ValidationPipe)

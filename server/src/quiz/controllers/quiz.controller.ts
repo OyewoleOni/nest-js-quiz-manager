@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateQuizDto } from '../dtos/createQuiz.dto';
+import { Quiz } from '../entities/quiz.entity';
 import { QuizService } from '../services/quiz.service';
 
 
@@ -9,8 +10,8 @@ export class QuizController {
     constructor(private quizService: QuizService) { }
 
     @Get()
-    getAllQuizs() {
-        return this.quizService.getAllQuiz();
+    async getAllQuizs(): Promise<Quiz[]> {
+        return await this.quizService.getAllQuiz();
     }
 
     @Get('/:id')
