@@ -4,10 +4,13 @@ import { AppService } from './app.service';
 import { TodoModule } from './todo/todo.module';
 import { QuizModule } from './quiz/quiz.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmConfig } from './config/typeorm.config';
+import { typeOrmConfigAsync } from './config/typeorm.config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TodoModule, QuizModule, TypeOrmModule.forRoot(typeOrmConfig)],
+  imports: [ConfigModule.forRoot({
+    isGlobal: true
+  }), TodoModule, QuizModule, TypeOrmModule.forRootAsync(typeOrmConfigAsync)],
   controllers: [AppController],
   providers: [AppService],
 })
